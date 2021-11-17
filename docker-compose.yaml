@@ -7,9 +7,11 @@ services:
       context: node
       dockerfile: dockerfile
     container_name: node
-    entrypoint: dockerize -wait tcp://db-desafio:3306 -timeout 20s node index.js
+    entrypoint: dockerize -wait tcp://db-desafio:3306 -timeout 20s npm start
     volumes:
-      - /home/caioadauri/Repos/docker/node:/usr/src/app
+      - ./node/:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
     networks:
       - desafio
     depends_on:
@@ -22,7 +24,7 @@ services:
     restart: always
     tty: true
     volumes:
-      - /home/caioadauri/Repos/docker/mysql:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=nodedb
       - MYSQL_ROOT_PASSWORD=root
