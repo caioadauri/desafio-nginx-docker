@@ -20,36 +20,20 @@ connection.query(select)
 
 app.get('/', (req, res) => {
 
-  const html = `<h1> Full Cycle Rocks! </h1> \
-                <h2> Retorno DB </h2> \
-                <div style="background-color: #e3e3e3; font-size: 1.5em;">${JSON.stringify([{ result }])}</div> \
-                <ul style="background-color: #369369; font-size: 1.5em;"> \
-                </ul>`;
+  
 
   connection.query(select, function (error, results, fields) {
     if(error) {
-      console.log(error.message);
+      res.send(error.message);
     }
-    const result = results
-  })
+    const html = `<h1> Full Cycle Rocks! </h1> \
+    <h2> Retorno DB </h2> \
+    <div style="background-color: #e3e3e3; font-size: 1.5em;">${JSON.stringify([{ results }])}</div> \
+    <ul style="background-color: #369369; font-size: 1.5em;"> \
+    </ul>`;
 
-
-
-
-  //connection.query(select, function (error, results, fields) {
-  //  if(error) {
-  //    console.log(error);
-  //    return
-  //  }
-  //  console.log(results)
-  //  results.forEach(function(row) {
-  //    console.log(row);
-  //    res.write(`<li>${row.name}</li`);
-  //  })
-  //})
-  //res.write('</ul>')
-  
-  res.send(html);
+    res.send(html);
+  })  
 })
 
 
